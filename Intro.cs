@@ -21,6 +21,7 @@ namespace ElephantBooking
                 "Would you like to delete an elephant, press 4 \n" +
                 "When you are done, please press 5");
             Console.WriteLine();
+            //Detta är en ändring
             Option = CheckEnum("Select from the menu by typing the correct number: "); //CheckEnum är en metod som kollar om val är möjligt
             Console.WriteLine();
         }

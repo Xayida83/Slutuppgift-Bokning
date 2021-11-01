@@ -1,0 +1,16 @@
+C:\Code\ElephantBooking\bin\Debug\net5.0\ElephantBooking.exe
+C:\Code\ElephantBooking\bin\Debug\net5.0\ElephantBooking.deps.json
+C:\Code\ElephantBooking\bin\Debug\net5.0\ElephantBooking.runtimeconfig.json
+C:\Code\ElephantBooking\bin\Debug\net5.0\ElephantBooking.runtimeconfig.dev.json
+C:\Code\ElephantBooking\bin\Debug\net5.0\ElephantBooking.dll
+C:\Code\ElephantBooking\bin\Debug\net5.0\ref\ElephantBooking.dll
+C:\Code\ElephantBooking\bin\Debug\net5.0\ElephantBooking.pdb
+C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.csproj.AssemblyReference.cache
+C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.GeneratedMSBuildEditorConfig.editorconfig
+C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.AssemblyInfoInputs.cache
+C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.AssemblyInfo.cs
+C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.csproj.CoreCompileInputs.cache
+C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.dll
+C:\Code\ElephantBooking\obj\Debug\net5.0\ref\ElephantBooking.dll
+C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.pdb
+C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.genruntimeconfig.cache

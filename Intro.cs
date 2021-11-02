@@ -12,8 +12,8 @@ namespace ElephantBooking
 
         public void Start()
         {
-            Console.WriteLine("Welcome to Elephant Rental\n" +
-                "Ride Big!");
+            Console.WriteLine("WELCOME TO RENTALSERVICE RIDE BIG!".PadLeft(Console.WindowWidth / 2));
+
             Console.WriteLine();
             Console.WriteLine("Would you like to rent an elephant, press 1\n" +
                 "Would you like to cancel a reservation, press 2\n" +

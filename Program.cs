@@ -6,6 +6,8 @@ namespace ElephantBooking
     {
         private static void Main(string[] args)
         {
+            Console.Title = "RIDE BIG!";
+
             var booking = new Method();
             bool returnToMeny = true;
             while (returnToMeny)

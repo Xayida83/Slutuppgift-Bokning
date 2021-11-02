@@ -22,7 +22,6 @@ namespace ElephantBooking
         //https://stackoverflow.com/questions/26868600/how-to-sort-a-list-of-objects-with-icomparable-and-icomparer
         public int CompareTo(Elephant next)
         {
-            //Snygg kod
             return next.ID.CompareTo(this.ID);
         }
     }

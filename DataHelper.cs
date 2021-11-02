@@ -37,9 +37,10 @@ namespace ElephantBooking
             return list;
         }
 
-        public static void AddItem()
+        public static void AddElephant(Elephant model)
         {
-            throw new NotImplementedException();
+            Elephants.Add(model);
+            Elephants.Sort();
         }
 
         public static void GetItem()
@@ -60,9 +61,11 @@ namespace ElephantBooking
             Elephants.Sort();
         }
 
-        public static void DeleteItem()
+        public static void DeleteElephant(int id)
         {
-            throw new NotImplementedException();
+            var current = Elephants.SingleOrDefault(x => x.ID == id);
+            Elephants.Remove(current);
+            Elephants.Sort();
         }
     }
 }

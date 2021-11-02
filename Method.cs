@@ -46,46 +46,33 @@ namespace ElephantBooking
             bool again = true;
             while (again)
             {
-                int IdNumber = CheckInt("Choose elephant by writing it's id number: ");
+                int idNumber = CheckInt("Choose elephant by writing it's id number: ");
                 try
                 {
-                    var result = DataHelper.Elephants.SingleOrDefault(x => x.ID == IdNumber && x.Vacant == true);
+                    var result = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber && x.Vacant == true);
+                    if (result is null || result.ID != idNumber)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("The ID number is wrong. Please try again.");
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                        continue;
+                    }
                     result.Vacant = false;
                     DataHelper.UpdateElephant(result);
+                    Console.WriteLine();
                     Console.WriteLine("You have rented the elephant.");
                     Console.WriteLine();
                     break;
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("The ID number is wrong. Pleas try again.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went wrong.");
+                    Console.ForegroundColor = ConsoleColor.White;
+
                     throw;
                 }
-
-                //foreach (var animal in DataHelper.Elephants)
-                //{
-                //    if (IdNumber == animal.ID && animal.Vacant == true)
-                //    {
-                //        animal.Vacant = false;
-                //        Console.WriteLine($"Elephant whit ID {IdNumber} is now occupied");
-                //        Console.WriteLine();
-                //        again = false;
-                //        DataHelper.UpdateElephant(animal);
-                //        break;
-                //    }
-                //    else if (IdNumber == animal.ID && animal.Vacant == false) //Skrivs inte ut alls
-                //    {
-                //        Console.WriteLine("This elephant is occupied.");
-                //        Console.WriteLine();
-                //        break;
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine("This elephant does not exixt."); //skrvier bara ut denna
-                //        Console.WriteLine();
-                //        break;
-                //    }
-                //}
             }
         }
 
@@ -95,60 +82,105 @@ namespace ElephantBooking
             bool again = true;
             while (again)
             {
-                int IdNumber = CheckInt("Write ID number of the Elepant that you are returning: ");
+                int idNumber = CheckInt("Write ID number of the Elepant that you are returning: ");
 
                 try
                 {
-                    var result = DataHelper.Elephants.SingleOrDefault(x => x.ID == IdNumber && x.Vacant == false);
+                    var result = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber && x.Vacant == false);
+                    if (result is null || result.ID != idNumber)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("The ID number is wrong.Please try again.");
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                        continue;
+                    }
                     result.Vacant = true;
                     DataHelper.UpdateElephant(result);
+                    Console.WriteLine();
                     Console.WriteLine("You have return the elephant.");
                     Console.WriteLine();
                     break;
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("The ID number is wrong. Pleas try again.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went wrong.");
+                    Console.ForegroundColor = ConsoleColor.White;
+
                     throw;
                 }
-                //foreach (var animal in DataHelper.Elephants)
-                //{
-                //    if (IdNumber == animal.ID && animal.Vacant == false)
-                //    {
-                //        animal.Vacant = true;
-                //        Console.WriteLine("You have returned the Elephant.");
-                //        Console.WriteLine();
-                //        again = false;
-                //        break;
-                //    }
-                //    if (IdNumber == animal.ID && animal.Vacant == true)
-                //    {
-                //        Console.WriteLine("This elephant has not been rented out.");
-                //        Console.WriteLine();
-                //        break;
-                //    }
-                //    //Skriver man in rätt id nummer kommer det ändå upp att elefant inte finns.
-                //    if (IdNumber != animal.ID)
-                //    {
-                //        Console.WriteLine("This elephant does not exixt.");
-                //        Console.WriteLine();
-                //        break;
-                //    }
-                //}
             }
         }
 
         public void CreateANewElephant()
         {
+            PrintOccupiedList();
+            PrintVacantList();
+            Console.WriteLine("Fill in this form please.");
+            string name = CheckString("Name: ");
+            int idNumber;
+            while (true)
+            {
+                idNumber = CheckInt("ID: ");
+                var elefant = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber);
+                if (!(elefant is null))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went wrong, please try again.");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    continue;
+                }
+                break;
+            }
+
+            string vacancy = CheckString("Vacant yes/no: ");
+            bool free;
+            if (vacancy == "yes")
+            {
+                free = true;
+            }
+            else
+            {
+                free = false;
+            }
+
+            DataHelper.AddElephant(new Elephant(name: name, id: idNumber, vacant: free));
+            Console.WriteLine();
+            Console.WriteLine("Your elephant have been saved.");
+            Console.WriteLine();
         }
 
         public void DeleteAnElephant()
         {
+            PrintOccupiedList();
+            PrintVacantList();
+            int idNumber;
+            while (true)
+            {
+                idNumber = CheckInt("Write the Id number of the elephant you like to delete: ");
+                var elefant = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber);
+                if (elefant is null || elefant.ID != idNumber)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went wrong, please try again.");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    continue;
+                }
+                break;
+            }
+
+            DataHelper.DeleteElephant(idNumber);
+            Console.WriteLine();
+            Console.WriteLine("The elephant has been deleted.");
+            Console.WriteLine();
         }
 
         public void EndThis()
         {
-            Console.WriteLine("Thank you for visiting Ride Big!\n" +
+            Console.WriteLine("Thank you for visiting RIDE BIG!\n" +
                 "Press enter to exit.");
             Console.WriteLine();
         }
@@ -169,7 +201,7 @@ namespace ElephantBooking
 
         public void PrintOccupiedList()
         {
-            Console.WriteLine("These elephants are Occupied.");
+            Console.WriteLine("These elephants are occupied.");
             Console.WriteLine();
             foreach (var animal in DataHelper.Elephants)
             {

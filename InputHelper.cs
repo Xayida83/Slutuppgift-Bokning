@@ -25,7 +25,9 @@ namespace ElephantBooking
                     if (!validInput)
                     {
                         ClearCurrentLine(left, top);
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Something went wrong, try again");
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
                 } while (!validInput);
                 try
@@ -36,7 +38,10 @@ namespace ElephantBooking
                 catch (Exception)
                 {
                     ClearCurrentLine(left, top);
-                    Console.WriteLine("Something went wrong, try again");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went wrong, please try again");
+                    Console.ForegroundColor = ConsoleColor.White;
+
                     continue;
                 }
             }
@@ -54,9 +59,32 @@ namespace ElephantBooking
                 if (!validInput)
                 {
                     ClearCurrentLine(left, top);
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Something went wrong, pleas try again.");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             } while (!validInput);
+            return result;
+        }
+
+        public string CheckString(string questionForString)
+        {
+            (int left, int top) = Console.GetCursorPosition();
+            bool notValidInput;
+            string result;
+            do
+            {
+                Console.Write(questionForString);
+                result = Console.ReadLine().ToLower();
+                notValidInput = String.IsNullOrEmpty(result);
+                if (notValidInput)
+                {
+                    ClearCurrentLine(left, top);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went wrong, pleas try again.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            } while (notValidInput);
             return result;
         }
 

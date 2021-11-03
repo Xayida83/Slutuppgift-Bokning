@@ -151,6 +151,8 @@ namespace ElephantBooking
 
         #endregion User methods
 
+        #region Elephant methods
+
         public static void AddElephant(Elephant model)
         {
             Elephants.Add(model);
@@ -171,6 +173,8 @@ namespace ElephantBooking
             Elephants.Remove(current);
             Elephants.Sort();
         }
+
+        #endregion Elephant methods
     }
 
     internal class Document

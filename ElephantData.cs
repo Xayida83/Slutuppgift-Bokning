@@ -6,135 +6,8 @@ using System.Threading.Tasks;
 
 namespace ElephantBooking
 {
-    public class Method : Intro
+    public class ElephantData : Intro
     {
-        public void Options()
-        {
-            Start();
-            switch (FirstOption)
-            {
-                case StartMenu.Login:
-                    LogIn();
-                    break;
-
-                case StartMenu.NewCustomer:
-                    CreateANewUser();
-                    break;
-
-                case StartMenu.Exit:
-                    Exit();
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (Option)
-            {
-                case Menu.Booking:
-                    BookAnElephant();
-                    break;
-
-                case Menu.Cancel:
-                    CancelABooking();
-                    break;
-
-                case Menu.NewElephant:
-                    CreateANewElephant();
-                    break;
-
-                case Menu.DeleteElephant:
-                    DeleteAnElephant();
-                    break;
-
-                case Menu.Exit:
-                    Exit();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private void LogIn()
-        {
-            while (true)
-            {
-                string name = CheckString("Your username: ");
-                string password = CheckString("Your password: ");
-                try
-                {
-                    var result = DataHelper.Users.SingleOrDefault(x => x.UserName == name && x.Password == password);
-                    if (result is null || result.UserName != name || result.Password != password)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("The password or username is wrong. Please try again.");
-                        Console.ForegroundColor = ConsoleColor.White;
-
-                        continue;
-                    }
-
-                    result.IsLoggedIn = true;
-                    DataHelper.UpdateUser(result);
-
-                    if (result.IsAdmin == true)
-                    {
-                        PrintMenuAdmin();
-                        break;
-                    }
-                    if (result.IsAdmin == false)
-                    {
-                        PrintMenuCustumer();
-                        break;
-                    }
-                }
-                catch (Exception)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong. Please try again.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    throw;
-                }
-            }
-        }
-
-        private void CreateANewUser()
-        {
-            Console.WriteLine("Fill in the form, please.");
-            string name = CheckString("Your full name: ");
-            int number = CheckInt("Phonenumber: ");
-            string userName = CheckString("User name: ");
-
-            while (true)
-            {
-                //try
-                // {
-                var result = DataHelper.Users.SingleOrDefault(x => x.UserName == userName);
-                if (result != null)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("The username is wrong. Please try a difrent one.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    continue;
-                }
-                break;
-                //}
-                //catch (Exception)
-                //{
-                //    Console.ForegroundColor = ConsoleColor.Red;
-                //    Console.WriteLine("Something went wrong. Please try again.");
-                //    Console.ForegroundColor = ConsoleColor.White;
-                //    continue;
-                //}
-            }
-            string password = CheckString("Password: ");
-            Console.WriteLine();
-
-            DataHelper.AddUser(new User(fullName: name, phonenumber: number, userName: userName, password: password, isAdmin: false, isLoggedIn: true));
-            Console.WriteLine("Welcome to RIDE BIG!");
-            PrintMenuCustumer();
-        }
-
         public void BookAnElephant()
         {
             PrintVacantList();
@@ -271,13 +144,6 @@ namespace ElephantBooking
             DataHelper.DeleteElephant(idNumber);
             Console.WriteLine();
             Console.WriteLine("The elephant has been deleted.");
-            Console.WriteLine();
-        }
-
-        public void Exit()
-        {
-            Console.WriteLine("Thank you for visiting RIDE BIG!\n" +
-                "Press enter to exit.");
             Console.WriteLine();
         }
 

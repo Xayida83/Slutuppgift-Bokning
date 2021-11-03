@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ElephantBooking
 {
@@ -6,16 +7,44 @@ namespace ElephantBooking
     {
         private static void Main(string[] args)
         {
-            DataHelper.LoadInDataOrSeed();
             Console.Title = "RIDE BIG!";
 
-            var method = new Method();
+            DataHelper.LoadInDataOrSeed();
+
+            //var intro = new Intro();
+            //intro.Start();
+
+            //var menues = new MenuHandler();
+            //var user = DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn);
+            //if (user.IsAdmin)
+            //{
+            //    menues.PrintMenuAdmin();
+            //}
+            //else
+            //{
+            //    menues.PrintMenuCustumer();
+            //}
+
+            var menus = new MenuHandler();
+            menus.Start();
+            menus.LoginMenu();
 
             bool returnToMeny = true;
             while (returnToMeny)
             {
-                method.Options();
-                if (method.Option == Menu.Exit || method.FirstOption == StartMenu.Exit)
+                var user = DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn);
+                if (user.IsAdmin)
+                {
+                    menus.PrintMenuAdmin();
+                    menus.MainMenu();
+                }
+                else
+                {
+                    menus.PrintMenuCustumer();
+                    menus.MainMenu();
+                }
+
+                if (menus.MainMenuOption == MainMenu.Exit || menus.StartMenuOption == StartMenu.Exit)
                 {
                     returnToMeny = false;
                 }

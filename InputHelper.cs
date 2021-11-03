@@ -26,7 +26,7 @@ namespace ElephantBooking
                     {
                         ClearCurrentLine(left, top);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Something went wrong, please try again");
+                        Console.WriteLine("Not a number, please try again.");
                         Console.ForegroundColor = ConsoleColor.White;
                     }
                 } while (!validInput);
@@ -47,13 +47,13 @@ namespace ElephantBooking
             }
         }
 
-        public Menu CheckEnumMenu(string question)
+        public MainMenu CheckEnumMenu(string question)
         {
             (int left, int top) = Console.GetCursorPosition();
 
-            Menu selection;
+            MainMenu selection;
             bool validInput;
-            Menu result;
+            MainMenu result;
             while (true)
             {
                 do
@@ -65,14 +65,14 @@ namespace ElephantBooking
                     {
                         ClearCurrentLine(left, top);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Something went wrong, please try again");
+                        Console.WriteLine("Not a number, please try again.");
                         Console.ForegroundColor = ConsoleColor.White;
                     }
                 } while (!validInput);
                 try
                 {
-                    var enumName = Enum.GetName(typeof(Menu), selection);
-                    return result = (Menu)Enum.Parse(typeof(Menu), enumName);
+                    var enumName = Enum.GetName(typeof(MainMenu), selection);
+                    return result = (MainMenu)Enum.Parse(typeof(MainMenu), enumName);
                 }
                 catch (Exception)
                 {
@@ -120,7 +120,7 @@ namespace ElephantBooking
                 {
                     ClearCurrentLine(left, top);
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong, pleas try again.");
+                    Console.WriteLine("Something went wrong, please try again.");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             } while (notValidInput);

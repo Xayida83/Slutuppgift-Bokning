@@ -73,6 +73,10 @@ namespace ElephantBooking
 
                         continue;
                     }
+
+                    result.IsLoggedIn = true;
+                    DataHelper.UpdateUser(result);
+
                     if (result.IsAdmin == true)
                     {
                         PrintMenuAdmin();
@@ -126,7 +130,7 @@ namespace ElephantBooking
             string password = CheckString("Password: ");
             Console.WriteLine();
 
-            DataHelper.AddUser(new User(fullName: name, phonenumber: number, userName: userName, password: password, isAdmin: false));
+            DataHelper.AddUser(new User(fullName: name, phonenumber: number, userName: userName, password: password, isAdmin: false, isLoggedIn: true));
             Console.WriteLine("Welcome to RIDE BIG!");
             PrintMenuCustumer();
         }

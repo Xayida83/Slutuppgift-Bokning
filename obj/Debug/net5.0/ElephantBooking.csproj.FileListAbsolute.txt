@@ -14,3 +14,5 @@ C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.dll
 C:\Code\ElephantBooking\obj\Debug\net5.0\ref\ElephantBooking.dll
 C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.pdb
 C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.genruntimeconfig.cache
+C:\Code\ElephantBooking\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Code\ElephantBooking\obj\Debug\net5.0\ElephantBooking.csproj.CopyComplete

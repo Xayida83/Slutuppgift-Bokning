@@ -16,6 +16,8 @@ namespace ElephantBooking
         public static List<User> Users;
         private static string FilePath = AppDomain.CurrentDomain.BaseDirectory + "BookingData.json";
 
+        #region File management
+
         public static void LoadInDataOrSeed()
         {
             if (!File.Exists(FilePath))
@@ -31,6 +33,7 @@ namespace ElephantBooking
 
         public static void SaveCurrentFile()
         {
+            LogOutAllUsers();
             UpdateFile();
         }
 
@@ -73,11 +76,13 @@ namespace ElephantBooking
             DeleteFile();
             using (FileStream fileStream = File.Create(FilePath))
             {
-                var json = JsonConvert.SerializeObject(new Document { Bookings = Bookings, Elephants = Elephants });
+                var json = JsonConvert.SerializeObject(new Document { Bookings = Bookings, Elephants = Elephants, Users = Users });
                 Byte[] value = new UTF8Encoding(true).GetBytes(json);
                 fileStream.Write(value, 0, value.Length);
             }
         }
+
+        #endregion File management
 
         private static List<Booking> BookingSeed()
         {
@@ -118,11 +123,33 @@ namespace ElephantBooking
             return list;
         }
 
+        #region User methods
+
         public static void AddUser(User model)
         {
             Users.Add(model);
             Users.Sort();
         }
+
+        public static void UpdateUser(User model)
+        {
+            var result = Users.SingleOrDefault(x => x.UserName == model.UserName);
+            Users.Remove(result);
+            Users.Add(model);
+            Users.Sort();
+        }
+
+        public static void LogOutAllUsers()
+        {
+            var loggedInUsers = Users.Where(x => x.IsLoggedIn);
+            foreach (var user in loggedInUsers)
+            {
+                user.IsLoggedIn = false;
+                UpdateUser(user);
+            }
+        }
+
+        #endregion User methods
 
         public static void AddElephant(Elephant model)
         {

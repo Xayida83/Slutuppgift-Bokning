@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "WtjBB1ik+pct9Axmw7WbNX9QPFrELTyDEv80ubHvVJ1r7UyFZLY6Ixt4gUSXVOZ4fWMwCBLlNtvb8YXGQ32DVw==",
+  "dgSpecHash": "qCKK+UAGrwyGzb+qlJzkoQIHCBK36hIh+C9J7NPWZyuRq0Yq5fTYl/cnVf1IjkpW8CGPhzBSFNJOirX6AbLriA==",
   "success": true,
   "projectFilePath": "C:\\Code\\ElephantBooking\\ElephantBooking.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\clott\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

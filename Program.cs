@@ -6,18 +6,21 @@ namespace ElephantBooking
     {
         private static void Main(string[] args)
         {
+            DataHelper.LoadInDataOrSeed();
             Console.Title = "RIDE BIG!";
 
-            var booking = new Method();
+            var method = new Method();
+
             bool returnToMeny = true;
             while (returnToMeny)
             {
-                booking.Options();
-                if (booking.Option == Meny.EndThis)
+                method.Options();
+                if (method.Option == Menu.Exit || method.FirstOption == StartMenu.Exit)
                 {
                     returnToMeny = false;
                 }
             }
+            DataHelper.SaveCurrentFile();
         }
     }
 }

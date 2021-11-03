@@ -8,21 +8,52 @@ namespace ElephantBooking
 {
     public class Intro : InputHelper
     {
-        public Meny Option { get; set; }
+        public Menu Option { get; set; }
+        public StartMenu FirstOption { get; set; }
 
         public void Start()
         {
             Console.WriteLine("WELCOME TO RENTALSERVICE RIDE BIG!".PadLeft(Console.WindowWidth / 2));
+            Console.WriteLine("Login press 1");
+            Console.WriteLine("New user press 2");
+            Console.WriteLine("To exit press 3");
 
+            FirstOption = CheckEnum("Select from the meny by typing the correct number: ");
             Console.WriteLine();
-            Console.WriteLine("Would you like to rent an elephant, press 1\n" +
-                "Would you like to cancel a reservation, press 2\n" +
-                "Would you like to register a new elephant, press 3\n" +
-                "Would you like to delete an elephant, press 4 \n" +
+        }
+
+        public void PrintMenuAdmin()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Rent an elephant, press 1\n" +
+                "Cancel a reservation, press 2\n" +
+                "Register a new elephant, press 3\n" +
+                "Delete an elephant, press 4 \n" +
                 "When you are done, please press 5");
             Console.WriteLine();
-            //Detta är en ändring
-            Option = CheckEnum("Select from the menu by typing the correct number: "); //CheckEnum är en metod som kollar om val är möjligt
+
+            Option = CheckEnumMenu("Select from the menu by typing the correct number: ");
+            Console.WriteLine();
+        }
+
+        public void PrintMenuCustumer()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Rent an elephant, press 1\n" +
+                "When you are done, please press 5");
+            Console.WriteLine();
+            while (true)
+            {
+                Option = CheckEnumMenu("Select from the menu by typing the correct number: ");
+                if (Option == Menu.Cancel || Option == Menu.NewElephant || Option == Menu.DeleteElephant)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You can choose between number 1 and 5.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                break;
+            }
             Console.WriteLine();
         }
     }

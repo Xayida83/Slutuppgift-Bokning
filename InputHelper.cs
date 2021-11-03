@@ -8,13 +8,13 @@ namespace ElephantBooking
 {
     public class InputHelper
     {
-        public Meny CheckEnum(string question)
+        public StartMenu CheckEnum(string question)
         {
             (int left, int top) = Console.GetCursorPosition();
 
-            Meny selection;
+            StartMenu selection;
             bool validInput;
-            Meny result;
+            StartMenu result;
             while (true)
             {
                 do
@@ -26,14 +26,53 @@ namespace ElephantBooking
                     {
                         ClearCurrentLine(left, top);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Something went wrong, try again");
+                        Console.WriteLine("Something went wrong, please try again");
                         Console.ForegroundColor = ConsoleColor.White;
                     }
                 } while (!validInput);
                 try
                 {
-                    var enumName = Enum.GetName(typeof(Meny), selection);
-                    return result = (Meny)Enum.Parse(typeof(Meny), enumName);
+                    var enumName = Enum.GetName(typeof(StartMenu), selection);
+                    return result = (StartMenu)Enum.Parse(typeof(StartMenu), enumName);
+                }
+                catch (Exception)
+                {
+                    ClearCurrentLine(left, top);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went wrong, please try again");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    continue;
+                }
+            }
+        }
+
+        public Menu CheckEnumMenu(string question)
+        {
+            (int left, int top) = Console.GetCursorPosition();
+
+            Menu selection;
+            bool validInput;
+            Menu result;
+            while (true)
+            {
+                do
+                {
+                    Console.Write(question);
+                    validInput = Enum.TryParse(Console.ReadLine(), out selection);
+
+                    if (!validInput)
+                    {
+                        ClearCurrentLine(left, top);
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Something went wrong, please try again");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                } while (!validInput);
+                try
+                {
+                    var enumName = Enum.GetName(typeof(Menu), selection);
+                    return result = (Menu)Enum.Parse(typeof(Menu), enumName);
                 }
                 catch (Exception)
                 {
@@ -60,7 +99,7 @@ namespace ElephantBooking
                 {
                     ClearCurrentLine(left, top);
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong, pleas try again.");
+                    Console.WriteLine("Something went wrong, please try again.");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             } while (!validInput);
@@ -75,7 +114,7 @@ namespace ElephantBooking
             do
             {
                 Console.Write(questionForString);
-                result = Console.ReadLine().ToLower();
+                result = Console.ReadLine();
                 notValidInput = String.IsNullOrEmpty(result);
                 if (notValidInput)
                 {

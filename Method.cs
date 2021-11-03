@@ -11,27 +11,44 @@ namespace ElephantBooking
         public void Options()
         {
             Start();
+            switch (FirstOption)
+            {
+                case StartMenu.Login:
+                    LogIn();
+                    break;
+
+                case StartMenu.NewCustomer:
+                    CreateANewUser();
+                    break;
+
+                case StartMenu.Exit:
+                    Exit();
+                    break;
+
+                default:
+                    break;
+            }
 
             switch (Option)
             {
-                case Meny.Booking:
+                case Menu.Booking:
                     BookAnElephant();
                     break;
 
-                case Meny.Cancel:
+                case Menu.Cancel:
                     CancelABooking();
                     break;
 
-                case Meny.NewElephant:
+                case Menu.NewElephant:
                     CreateANewElephant();
                     break;
 
-                case Meny.DeleteElephant:
+                case Menu.DeleteElephant:
                     DeleteAnElephant();
                     break;
 
-                case Meny.EndThis:
-                    EndThis();
+                case Menu.Exit:
+                    Exit();
                     break;
 
                 default:
@@ -39,12 +56,86 @@ namespace ElephantBooking
             }
         }
 
+        private void LogIn()
+        {
+            while (true)
+            {
+                string name = CheckString("Your username: ");
+                string password = CheckString("Your password: ");
+                try
+                {
+                    var result = DataHelper.Users.SingleOrDefault(x => x.UserName == name && x.Password == password);
+                    if (result is null || result.UserName != name || result.Password != password)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("The password or username is wrong. Please try again.");
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                        continue;
+                    }
+                    if (result.IsAdmin == true)
+                    {
+                        PrintMenuAdmin();
+                        break;
+                    }
+                    if (result.IsAdmin == false)
+                    {
+                        PrintMenuCustumer();
+                        break;
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went wrong. Please try again.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    throw;
+                }
+            }
+        }
+
+        private void CreateANewUser()
+        {
+            Console.WriteLine("Fill in the form, please.");
+            string name = CheckString("Your full name: ");
+            int number = CheckInt("Phonenumber: ");
+            string userName = CheckString("User name: ");
+
+            while (true)
+            {
+                //try
+                // {
+                var result = DataHelper.Users.SingleOrDefault(x => x.UserName == userName);
+                if (result != null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("The username is wrong. Please try a difrent one.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                break;
+                //}
+                //catch (Exception)
+                //{
+                //    Console.ForegroundColor = ConsoleColor.Red;
+                //    Console.WriteLine("Something went wrong. Please try again.");
+                //    Console.ForegroundColor = ConsoleColor.White;
+                //    continue;
+                //}
+            }
+            string password = CheckString("Password: ");
+            Console.WriteLine();
+
+            DataHelper.AddUser(new User(fullName: name, phonenumber: number, userName: userName, password: password, isAdmin: false));
+            Console.WriteLine("Welcome to RIDE BIG!");
+            PrintMenuCustumer();
+        }
+
         public void BookAnElephant()
         {
             PrintVacantList();
 
-            bool again = true;
-            while (again)
+            while (true)
             {
                 int idNumber = CheckInt("Choose elephant by writing it's id number: ");
                 try
@@ -68,7 +159,7 @@ namespace ElephantBooking
                 catch (Exception)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong.");
+                    Console.WriteLine("Something went wrong. Please try again.");
                     Console.ForegroundColor = ConsoleColor.White;
 
                     throw;
@@ -79,8 +170,8 @@ namespace ElephantBooking
         public void CancelABooking()
         {
             PrintOccupiedList();
-            bool again = true;
-            while (again)
+
+            while (true)
             {
                 int idNumber = CheckInt("Write ID number of the Elepant that you are returning: ");
 
@@ -136,6 +227,7 @@ namespace ElephantBooking
             }
 
             string vacancy = CheckString("Vacant yes/no: ");
+            vacancy.ToLower();
             bool free;
             if (vacancy == "yes")
             {
@@ -178,7 +270,7 @@ namespace ElephantBooking
             Console.WriteLine();
         }
 
-        public void EndThis()
+        public void Exit()
         {
             Console.WriteLine("Thank you for visiting RIDE BIG!\n" +
                 "Press enter to exit.");

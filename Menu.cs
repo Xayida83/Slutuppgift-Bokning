@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ElephantBooking
 {
-    public enum Meny
+    public enum Menu
     {
         Booking = 1,
         Cancel = 2,
         NewElephant = 3,
         DeleteElephant = 4,
-        EndThis = 5
+        Exit = 5
     }
 }

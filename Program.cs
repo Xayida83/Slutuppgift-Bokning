@@ -11,43 +11,32 @@ namespace ElephantBooking
 
             DataHelper.LoadInDataOrSeed();
 
-            //var intro = new Intro();
-            //intro.Start();
-
-            //var menues = new MenuHandler();
-            //var user = DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn);
-            //if (user.IsAdmin)
-            //{
-            //    menues.PrintMenuAdmin();
-            //}
-            //else
-            //{
-            //    menues.PrintMenuCustumer();
-            //}
-
-            var menus = new MenuHandler();
-            menus.Start();
-            menus.LoginMenu();
+            var menues = new MenuHandler();
+            menues.Start();
+            menues.LoginMenu();
 
             bool returnToMeny = true;
             while (returnToMeny)
             {
-                var user = DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn);
-                if (user.IsAdmin)
-                {
-                    menus.PrintMenuAdmin();
-                    menus.MainMenu();
-                }
-                else
-                {
-                    menus.PrintMenuCustumer();
-                    menus.MainMenu();
-                }
-
-                if (menus.MainMenuOption == MainMenu.Exit || menus.StartMenuOption == StartMenu.Exit)
+                if (menues.MainMenuOption == MainMenu.Exit || menues.StartMenuOption == StartMenu.Exit)
                 {
                     returnToMeny = false;
                 }
+                else
+                {
+                    var user = DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn);//exit fungerar inte. Hamnar här
+
+                    if (user.IsAdmin)
+                    {
+                        menues.PrintMenuAdmin();
+                        menues.MainMenu();
+                    }
+                    else
+                    {
+                        menues.PrintMenuCustumer();
+                        menues.MainMenu();
+                    }
+                };
             }
             DataHelper.SaveCurrentFile();
         }

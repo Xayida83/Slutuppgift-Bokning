@@ -141,10 +141,9 @@ namespace ElephantBooking
 
         public static void LogOutAllUsers()
         {
-            var loggedInUsers = Users.Where(x => x.IsLoggedIn);
+            var loggedInUsers = Users.Where(x => x.IsLoggedIn).ToList();
             foreach (var user in loggedInUsers)
             {
-                user.IsLoggedIn = false;
                 UpdateUser(user);
             }
         }

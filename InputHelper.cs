@@ -149,7 +149,6 @@ namespace ElephantBooking
                         break;
                     }
                 }
-
                 validInput = result.Length == 10 && validInput;
                 if (!validInput)
                 {

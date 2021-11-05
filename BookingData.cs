@@ -27,7 +27,7 @@ namespace ElephantBooking
             if (booking != null)
             {
                 Console.WriteLine();
-                Console.WriteLine($"You have a booking on this elephant: {booking.BookedElephant.Name}");
+                Console.WriteLine($"You have a booking on this elephant: {booking.BookedElephant.Name} Whit ID: {booking.BookedElephant.ID}");
             }
             else
             {

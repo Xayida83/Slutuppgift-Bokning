@@ -15,6 +15,7 @@ namespace ElephantBooking
             {
                 case StartMenuOption.Login:
                     userData.LogIn();
+                    ClearConsole();
                     break;
 
                 case StartMenuOption.NewCustomer:
@@ -37,18 +38,23 @@ namespace ElephantBooking
             {
                 case ElephantBooking.MainMenuOption.Booking:
                     elephantData.BookAnElephant();
+                    ClearConsole();
                     break;
 
                 case ElephantBooking.MainMenuOption.Return:
                     elephantData.ReturnABooking();
+                    ClearConsole();
                     break;
 
                 case ElephantBooking.MainMenuOption.NewElephant:
+                    ClearConsole();
                     elephantData.CreateANewElephant();
+                    ClearConsole();
                     break;
 
                 case ElephantBooking.MainMenuOption.DeleteElephant:
                     elephantData.DeleteAnElephant();
+                    ClearConsole();
                     break;
 
                 case ElephantBooking.MainMenuOption.Exit:

@@ -41,14 +41,17 @@ namespace ElephantBooking
 
         public void ReturnABooking()
         {
-            PrintOccupiedList();
-
             while (true)
             {
+                var result = DataHelper.Bookings.SingleOrDefault(x => x.UsernameForBooking == DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn).UserName);
+                if (result is null)
+                {
+                    Console.WriteLine("You have no current bookings");
+                    break;
+                }
                 int idNumber = CheckInt("Write ID number of the Elepant that you are returning: ");
 
-                var result = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber && x.Vacant == false);
-                if (result is null || result.ID != idNumber)
+                if (result is null || result.BookedElephant.ID != idNumber)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("The ID number is wrong.Please try again.");
@@ -56,9 +59,9 @@ namespace ElephantBooking
 
                     continue;
                 }
-                result.Vacant = true;
-                DataHelper.UpdateElephant(result);
-                var booking = DataHelper.Bookings.SingleOrDefault(x => x.BookedElephant.ID == result.ID);
+                result.BookedElephant.Vacant = true;
+                DataHelper.UpdateElephant(result.BookedElephant);
+                var booking = DataHelper.Bookings.SingleOrDefault(x => x.BookedElephant.ID == result.BookedElephant.ID);
                 DataHelper.DeleteBooking(booking);
 
                 Console.WriteLine();

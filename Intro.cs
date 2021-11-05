@@ -35,7 +35,7 @@ namespace ElephantBooking
                 "Return elephant, press 2\n" +
                 "Register a new elephant, press 3\n" +
                 "Delete an elephant, press 4 \n" +
-                "Log out, please press 5");
+                "To save and log out, please press 5");
             Console.WriteLine();
 
             MainMenuOption = CheckEnumMenu("Select from the menu by typing the correct number: ");
@@ -65,6 +65,13 @@ namespace ElephantBooking
                 break;
             }
             Console.WriteLine();
+        }
+
+        public void ClearConsole()
+        {
+            Console.WriteLine("Press enter to continue.");
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 }

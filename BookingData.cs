@@ -23,11 +23,14 @@ namespace ElephantBooking
         public void PrintBooking()
         {
             var user = DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn == true);
-            var booking = DataHelper.Bookings.SingleOrDefault(x => x.UsernameForBooking == user.UserName);
-            if (booking != null)
+            var bookings = DataHelper.Bookings.Where(x => x.UsernameForBooking == user.UserName);
+            if (bookings != null)
             {
-                Console.WriteLine();
-                Console.WriteLine($"You have a booking on this elephant: {booking.BookedElephant.Name} Whit ID: {booking.BookedElephant.ID}");
+                foreach (var booking in bookings)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"You have a booking on this elephant: {booking.BookedElephant.Name} Whit ID: {booking.BookedElephant.ID}");
+                }
             }
             else
             {

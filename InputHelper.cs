@@ -28,9 +28,7 @@ namespace ElephantBooking
                     if (!validInput)
                     {
                         ClearCurrentLine(left, top);
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Not a number, please try again.");
-                        Console.ForegroundColor = ConsoleColor.White;
+                        ConsoleTextColorRed("Not a number, please try again.");
                     }
                 } while (!validInput);
                 try
@@ -41,10 +39,7 @@ namespace ElephantBooking
                 catch (Exception)
                 {
                     ClearCurrentLine(left, top);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Choose a number 1-3, please try again");
-                    Console.ForegroundColor = ConsoleColor.White;
-
+                    ConsoleTextColorRed("Choose a number 1-3, please try again");
                     continue;
                 }
             }
@@ -67,9 +62,7 @@ namespace ElephantBooking
                     if (!validInput)
                     {
                         ClearCurrentLine(left, top);
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Not a number, please try again.");
-                        Console.ForegroundColor = ConsoleColor.White;
+                        ConsoleTextColorRed("Not a number, please try again.");
                     }
                 } while (!validInput);
                 try
@@ -80,10 +73,7 @@ namespace ElephantBooking
                 catch (Exception)
                 {
                     ClearCurrentLine(left, top);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Choose a number from menu please and try again");
-                    Console.ForegroundColor = ConsoleColor.White;
-
+                    ConsoleTextColorRed("Choose a number from menu please and try again");
                     continue;
                 }
             }
@@ -101,9 +91,7 @@ namespace ElephantBooking
                 if (!validInput)
                 {
                     ClearCurrentLine(left, top);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You have to write a number, please try again.");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    ConsoleTextColorRed("You have to write a number, please try again.");
                 }
             } while (!validInput);
             return result;
@@ -122,9 +110,7 @@ namespace ElephantBooking
                 if (notValidInput)
                 {
                     ClearCurrentLine(left, top);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong, please try again.");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    ConsoleTextColorRed("Something went wrong, please try again.");
                 }
             } while (notValidInput);
             return result;
@@ -153,9 +139,7 @@ namespace ElephantBooking
                 if (!validInput)
                 {
                     ClearCurrentLine(left, top);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You have to write a 10 didget phonenumber, please try again.");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    ConsoleTextColorRed("You have to write a 10 didget phonenumber, please try again.");
                 }
             } while (!validInput);
             return result;
@@ -166,6 +150,13 @@ namespace ElephantBooking
             Console.SetCursorPosition(left, top);
             Console.Write(new String(' ', Console.WindowWidth));
             Console.SetCursorPosition(left, top);
+        }
+
+        public void ConsoleTextColorRed(string wrongMessage)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(wrongMessage);
+            Console.ResetColor();
         }
     }
 }

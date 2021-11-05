@@ -21,10 +21,7 @@ namespace ElephantBooking
                 var elephant = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber && x.Vacant == true);
                 if (elephant is null || elephant.ID != idNumber)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("The ID number is wrong. Please try again.");
-                    Console.ForegroundColor = ConsoleColor.White;
-
+                    ConsoleTextColorRed("The ID number is wrong. Please try again.");
                     continue;
                 }
                 elephant.Vacant = false;
@@ -43,29 +40,26 @@ namespace ElephantBooking
         {
             while (true)
             {
-                var result = DataHelper.Bookings.SingleOrDefault(x => x.UsernameForBooking == DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn).UserName);
-                if (result is null)
+                var currentBookings = DataHelper.Bookings.Where(x => x.UsernameForBooking == DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn).UserName).ToList();
+                if (currentBookings.Count == 0)
                 {
                     Console.WriteLine("You have no current bookings");
                     break;
                 }
                 int idNumber = CheckInt("Write ID number of the Elepant that you are returning: ");
-
-                if (result is null || result.BookedElephant.ID != idNumber)
+                var bookingToReturn = currentBookings.SingleOrDefault(x => x.BookedElephant.ID == idNumber);
+                if (bookingToReturn is null)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("The ID number is wrong.Please try again.");
-                    Console.ForegroundColor = ConsoleColor.White;
-
+                    ConsoleTextColorRed("The ID number is wrong.Please try again.");
                     continue;
                 }
-                result.BookedElephant.Vacant = true;
-                DataHelper.UpdateElephant(result.BookedElephant);
-                var booking = DataHelper.Bookings.SingleOrDefault(x => x.BookedElephant.ID == result.BookedElephant.ID);
-                DataHelper.DeleteBooking(booking);
+                bookingToReturn.BookedElephant.Vacant = true;
+                DataHelper.UpdateElephant(bookingToReturn.BookedElephant);
+
+                DataHelper.DeleteBooking(bookingToReturn);
 
                 Console.WriteLine();
-                Console.WriteLine("You have return the elephant.");
+                Console.WriteLine("You have returned the elephant.");
                 Console.WriteLine();
                 break;
             }
@@ -84,10 +78,7 @@ namespace ElephantBooking
                 var elefant = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber);
                 if (!(elefant is null))
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("This ID number is already in use. Please pick a new one.");
-                    Console.ForegroundColor = ConsoleColor.White;
-
+                    ConsoleTextColorRed("This ID number is already in use. Please pick a new one.");
                     continue;
                 }
                 break;
@@ -121,17 +112,12 @@ namespace ElephantBooking
                 var elephant = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber);
                 if (elephant is null || elephant.ID != idNumber)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("There is no elephant whit this ID number. Please try again.");
-                    Console.ForegroundColor = ConsoleColor.White;
-
+                    ConsoleTextColorRed("There is no elephant whit this ID number. Please try again.");
                     continue;
                 }
                 if (elephant.Vacant == false)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("The elephant is rented out.");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    ConsoleTextColorRed("The elephant is rented out.");
                     continue;
                 }
                 break;

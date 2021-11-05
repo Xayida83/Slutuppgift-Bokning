@@ -21,10 +21,7 @@ namespace ElephantBooking
                 var result = DataHelper.Users.SingleOrDefault(x => x.UserName == name && x.Password == password);
                 if (result is null || result.UserName != name || result.Password != password)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("The password or username is wrong. Please try again.");
-                    Console.ForegroundColor = ConsoleColor.White;
-
+                    ConsoleTextColorRed("The password or username is wrong. Please try again.");
                     continue;
                 }
 
@@ -46,9 +43,7 @@ namespace ElephantBooking
                 var result = DataHelper.Users.SingleOrDefault(x => x.UserName == userName);
                 if (result != null)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("The username is wrong. Please try a difrent one.");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    ConsoleTextColorRed("The username is wrong. Please try a difrent one.");
                     continue;
                 }
                 break;

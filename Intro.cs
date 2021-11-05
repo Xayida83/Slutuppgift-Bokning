@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace ElephantBooking
 {
+    /// <summary>
+    /// Skriver ut menyena och sparar valet man har gjort.
+    /// </summary>
     public class Intro : InputHelper
     {
-        public MainMenu MainMenuOption { get; set; }
-        public StartMenu StartMenuOption { get; set; }
+        public MainMenuOption MainMenuOption { get; set; }
+        public StartMenuOption StartMenuOption { get; set; }
 
         public void Start()
         {
@@ -24,9 +27,12 @@ namespace ElephantBooking
 
         public void PrintMenuAdmin()
         {
+            var bookingData = new BookingData();
+            bookingData.PrintBooking();
+
             Console.WriteLine();
             Console.WriteLine("Rent an elephant, press 1\n" +
-                "Cancel a reservation, press 2\n" +
+                "Return elephant, press 2\n" +
                 "Register a new elephant, press 3\n" +
                 "Delete an elephant, press 4 \n" +
                 "Log out, please press 5");
@@ -38,14 +44,18 @@ namespace ElephantBooking
 
         public void PrintMenuCustumer()
         {
+            var bookingData = new BookingData();
+            bookingData.PrintBooking();
+
             Console.WriteLine();
             Console.WriteLine("Rent an elephant, press 1\n" +
+                "Return elephant, press 2\n" +
                 "Log out, please press 5");
             Console.WriteLine();
             while (true)
             {
                 MainMenuOption = CheckEnumMenu("Select from the menu by typing the correct number: ");
-                if (MainMenuOption == MainMenu.Cancel || MainMenuOption == MainMenu.NewElephant || MainMenuOption == MainMenu.DeleteElephant)
+                if (MainMenuOption == MainMenuOption.NewElephant || MainMenuOption == MainMenuOption.DeleteElephant)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("You can choose number 1 or 5.");

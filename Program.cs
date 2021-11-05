@@ -11,20 +11,20 @@ namespace ElephantBooking
 
             DataHelper.LoadInDataOrSeed();
 
-            var menues = new MenuHandler();
+            var menues = new MenuOptionHandler();
             menues.Start();
             menues.LoginMenu();
 
             bool returnToMeny = true;
             while (returnToMeny)
             {
-                if (menues.MainMenuOption == MainMenu.Exit || menues.StartMenuOption == StartMenu.Exit)
+                if (menues.MainMenuOption == MainMenuOption.Exit || menues.StartMenuOption == StartMenuOption.Exit)
                 {
                     returnToMeny = false;
                 }
                 else
                 {
-                    var user = DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn);//exit fungerar inte. Hamnar här
+                    var user = DataHelper.Users.SingleOrDefault(x => x.IsLoggedIn);
 
                     if (user.IsAdmin)
                     {

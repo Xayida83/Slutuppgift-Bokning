@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace ElephantBooking
 {
-    public class MenuHandler : Intro
+    public class MenuOptionHandler : Intro
     {
         public void LoginMenu()
         {
             var userData = new UserData();
             switch (StartMenuOption)
             {
-                case StartMenu.Login:
+                case StartMenuOption.Login:
                     userData.LogIn();
                     break;
 
-                case StartMenu.NewCustomer:
+                case StartMenuOption.NewCustomer:
                     userData.CreateANewUser();
                     break;
 
-                case StartMenu.Exit:
+                case StartMenuOption.Exit:
                     Exit();
                     break;
 
@@ -35,23 +35,23 @@ namespace ElephantBooking
             var elephantData = new ElephantData();
             switch (MainMenuOption)
             {
-                case ElephantBooking.MainMenu.Booking:
+                case ElephantBooking.MainMenuOption.Booking:
                     elephantData.BookAnElephant();
                     break;
 
-                case ElephantBooking.MainMenu.Cancel:
-                    elephantData.CancelABooking();
+                case ElephantBooking.MainMenuOption.Return:
+                    elephantData.ReturnABooking();
                     break;
 
-                case ElephantBooking.MainMenu.NewElephant:
+                case ElephantBooking.MainMenuOption.NewElephant:
                     elephantData.CreateANewElephant();
                     break;
 
-                case ElephantBooking.MainMenu.DeleteElephant:
+                case ElephantBooking.MainMenuOption.DeleteElephant:
                     elephantData.DeleteAnElephant();
                     break;
 
-                case ElephantBooking.MainMenu.Exit:
+                case ElephantBooking.MainMenuOption.Exit:
                     Exit();
                     break;
 

@@ -8,47 +8,29 @@ namespace ElephantBooking
 {
     public class UserData : Intro
     {
+        /// <summary>
+        /// Hanterar olika skeden av Elephant klassen.
+        /// </summary>
         public void LogIn()
         {
             while (true)
             {
                 string name = CheckString("Your username: ");
                 string password = CheckString("Your password: ");
-                try
-                {
-                    var result = DataHelper.Users.SingleOrDefault(x => x.UserName == name && x.Password == password);
-                    if (result is null || result.UserName != name || result.Password != password)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("The password or username is wrong. Please try again.");
-                        Console.ForegroundColor = ConsoleColor.White;
 
-                        continue;
-                    }
-
-                    result.IsLoggedIn = true;
-                    DataHelper.UpdateUser(result);
-                    break;
-                    //if (result.IsAdmin == true)
-                    //{
-                    //    PrintMenuAdmin();
-
-                    //    break;
-                    //}
-                    //if (result.IsAdmin == false)
-                    //{
-                    //    PrintMenuCustumer();
-
-                    //    break;
-                    //}
-                }
-                catch (Exception)
+                var result = DataHelper.Users.SingleOrDefault(x => x.UserName == name && x.Password == password);
+                if (result is null || result.UserName != name || result.Password != password)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong. Please try again.");
+                    Console.WriteLine("The password or username is wrong. Please try again.");
                     Console.ForegroundColor = ConsoleColor.White;
-                    throw;
+
+                    continue;
                 }
+
+                result.IsLoggedIn = true;
+                DataHelper.UpdateUser(result);
+                break;
             }
         }
 
@@ -56,7 +38,7 @@ namespace ElephantBooking
         {
             Console.WriteLine("Fill in the form, please.");
             string name = CheckString("Your full name: ");
-            int number = CheckInt("Phonenumber: ");
+            string phoneNumber = CheckPhoneNumber("Phonenumber: ");
             string userName = CheckString("User name: ");
 
             while (true)
@@ -74,9 +56,7 @@ namespace ElephantBooking
             string password = CheckString("Password: ");
             Console.WriteLine();
 
-            DataHelper.AddUser(new User(fullName: name, phonenumber: number, userName: userName, password: password, isAdmin: false, isLoggedIn: true));
-            Console.WriteLine("Welcome to RIDE BIG!");
-            PrintMenuCustumer();
+            DataHelper.AddUser(new User(fullName: name, phonenumber: phoneNumber, userName: userName, password: password, isAdmin: false, isLoggedIn: true));
         }
     }
 }

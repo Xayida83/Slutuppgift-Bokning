@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElephantBooking
 {
-    public enum StartMenu
+    public enum StartMenuOption
     {
         Login = 1,
         NewCustomer = 2,

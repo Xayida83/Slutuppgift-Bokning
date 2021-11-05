@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ElephantBooking
 {
+    /// <summary>
+    /// Hanterar olika skeden av Elephant klassen.
+    /// </summary>
     public class ElephantData : Intro
     {
         public void BookAnElephant()
@@ -15,36 +18,28 @@ namespace ElephantBooking
             while (true)
             {
                 int idNumber = CheckInt("Choose elephant by writing it's id number: ");
-                try
-                {
-                    var result = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber && x.Vacant == true);
-                    if (result is null || result.ID != idNumber)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("The ID number is wrong. Please try again.");
-                        Console.ForegroundColor = ConsoleColor.White;
-
-                        continue;
-                    }
-                    result.Vacant = false;
-                    DataHelper.UpdateElephant(result);
-                    Console.WriteLine();
-                    Console.WriteLine("You have rented the elephant.");
-                    Console.WriteLine();
-                    break;
-                }
-                catch (Exception)
+                var elephant = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber && x.Vacant == true);
+                if (elephant is null || elephant.ID != idNumber)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong. Please try again.");
+                    Console.WriteLine("The ID number is wrong. Please try again.");
                     Console.ForegroundColor = ConsoleColor.White;
 
-                    throw;
+                    continue;
                 }
+                elephant.Vacant = false;
+                DataHelper.UpdateElephant(elephant);
+                var bookingData = new BookingData();
+                bookingData.CreateBooking(elephant);
+
+                Console.WriteLine();
+                Console.WriteLine("You have rented the elephant.");
+                Console.WriteLine();
+                break;
             }
         }
 
-        public void CancelABooking()
+        public void ReturnABooking()
         {
             PrintOccupiedList();
 
@@ -52,32 +47,24 @@ namespace ElephantBooking
             {
                 int idNumber = CheckInt("Write ID number of the Elepant that you are returning: ");
 
-                try
-                {
-                    var result = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber && x.Vacant == false);
-                    if (result is null || result.ID != idNumber)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("The ID number is wrong.Please try again.");
-                        Console.ForegroundColor = ConsoleColor.White;
-
-                        continue;
-                    }
-                    result.Vacant = true;
-                    DataHelper.UpdateElephant(result);
-                    Console.WriteLine();
-                    Console.WriteLine("You have return the elephant.");
-                    Console.WriteLine();
-                    break;
-                }
-                catch (Exception)
+                var result = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber && x.Vacant == false);
+                if (result is null || result.ID != idNumber)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong.");
+                    Console.WriteLine("The ID number is wrong.Please try again.");
                     Console.ForegroundColor = ConsoleColor.White;
 
-                    throw;
+                    continue;
                 }
+                result.Vacant = true;
+                DataHelper.UpdateElephant(result);
+                var booking = DataHelper.Bookings.SingleOrDefault(x => x.BookedElephant.ID == result.ID);
+                DataHelper.DeleteBooking(booking);
+
+                Console.WriteLine();
+                Console.WriteLine("You have return the elephant.");
+                Console.WriteLine();
+                break;
             }
         }
 
@@ -95,7 +82,7 @@ namespace ElephantBooking
                 if (!(elefant is null))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong, please try again.");
+                    Console.WriteLine("This ID number is already in use. Please pick a new one.");
                     Console.ForegroundColor = ConsoleColor.White;
 
                     continue;
@@ -123,19 +110,25 @@ namespace ElephantBooking
 
         public void DeleteAnElephant()
         {
-            PrintOccupiedList();
             PrintVacantList();
             int idNumber;
             while (true)
             {
                 idNumber = CheckInt("Write the Id number of the elephant you like to delete: ");
-                var elefant = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber);
-                if (elefant is null || elefant.ID != idNumber)
+                var elephant = DataHelper.Elephants.SingleOrDefault(x => x.ID == idNumber);
+                if (elephant is null || elephant.ID != idNumber)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong, please try again.");
+                    Console.WriteLine("There is no elephant whit this ID number. Please try again.");
                     Console.ForegroundColor = ConsoleColor.White;
 
+                    continue;
+                }
+                if (elephant.Vacant == false)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("The elephant is rented out.");
+                    Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
                 break;

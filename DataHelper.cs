@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 
 namespace ElephantBooking
 {
+    /// <summary>
+    /// Hanterar lagring, uppdatering och hämtning av data samt sparar data i filformat.
+    /// </summary>
     public static class DataHelper
     {
         public static List<Booking> Bookings;
@@ -84,12 +87,13 @@ namespace ElephantBooking
 
         #endregion File management
 
+        #region Seeds
+
         private static List<Booking> BookingSeed()
         {
             return new List<Booking>
             {
-            new Booking{BookedElephant = new Elephant("Pelle",1,false), IsActive=false},
-            new Booking{BookedElephant = new Elephant("Lisa",2,true), IsActive=true}
+            new Booking{BookedElephant = new Elephant("Sofia",37,false), UsernameForBooking = "Britt"}
             };
         }
 
@@ -98,10 +102,10 @@ namespace ElephantBooking
             var list = new List<Elephant>
             {
             new Elephant(name: "Sandra", id: 31, vacant: true),
-            new Elephant(name: "Anders", id: 32, vacant: false),
-            new Elephant(name: "Sören", id: 33, vacant: false),
+            new Elephant(name: "Anders", id: 32, vacant: true),
+            new Elephant(name: "Sören", id: 33, vacant: true),
             new Elephant(name: "Ida", id: 34, vacant: true),
-            new Elephant(name: "Krokus", id: 35, vacant: false),
+            new Elephant(name: "Krokus", id: 35, vacant: true),
             new Elephant(name: "Snoken", id: 36, vacant: true),
             new Elephant(name: "Sofia", id: 37, vacant: false),
             new Elephant(name: "Erik", id: 38, vacant: true)
@@ -114,14 +118,16 @@ namespace ElephantBooking
         {
             var list = new List<User>
             {
-                new User(fullName: "Charlotta Lindberg", phonenumber: 0729956895, userName: "L8", password: "kodaÄrKul", isAdmin: true, isLoggedIn: false ),
-                new User(fullName: "Jens Palmqvist", phonenumber: 0725547545, userName: "Högsta Hönset", password: "vabbaÄrJobbigt", isAdmin: true, isLoggedIn: false ),
-                new User(fullName: "Britt Svensson", phonenumber: 0736695447, userName: "Britt", password: "Hund", isAdmin: false, isLoggedIn: false ),
-                new User(fullName: "James Pitkanän", phonenumber: 0735546869, userName: "Wify", password: "Lottaärbäst", isAdmin: false, isLoggedIn: false),
+                new User(fullName: "Charlotta Lindberg", phonenumber: "0729921705", userName: "L8", password: "kodaÄrKul", isAdmin: true, isLoggedIn: false ),
+                new User(fullName: "Jens Palmqvist", phonenumber: "0725547545", userName: "Högsta Hönset", password: "vabbaÄrJobbigt", isAdmin: true, isLoggedIn: false ),
+                new User(fullName: "Britt Svensson", phonenumber: "0736695447", userName: "Britt", password: "Hund", isAdmin: false, isLoggedIn: false ),
+                new User(fullName: "James Pitkanän", phonenumber: "0735546869", userName: "Wify", password: "Lottaärbäst", isAdmin: false, isLoggedIn: false),
             };
             list.Sort();
             return list;
         }
+
+        #endregion Seeds
 
         #region User methods
 
@@ -144,6 +150,7 @@ namespace ElephantBooking
             var loggedInUsers = Users.Where(x => x.IsLoggedIn).ToList();
             foreach (var user in loggedInUsers)
             {
+                user.IsLoggedIn = false;
                 UpdateUser(user);
             }
         }
@@ -174,6 +181,22 @@ namespace ElephantBooking
         }
 
         #endregion Elephant methods
+
+        #region Booking Methods
+
+        public static void AddBooking(Booking model)
+        {
+            Bookings.Add(model);
+            Bookings.Sort();
+        }
+
+        public static void DeleteBooking(Booking model)
+        {
+            Bookings.Remove(model);
+            Bookings.Sort();
+        }
+
+        #endregion Booking Methods
     }
 
     internal class Document

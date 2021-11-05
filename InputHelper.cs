@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace ElephantBooking
 {
+    /// <summary>
+    /// Här validerars olika värden när användare väljer i menyerna.
+    /// </summary>
     public class InputHelper
     {
-        public StartMenu CheckEnum(string question)
+        public StartMenuOption CheckEnum(string question)
         {
             (int left, int top) = Console.GetCursorPosition();
 
-            StartMenu selection;
+            StartMenuOption selection;
             bool validInput;
-            StartMenu result;
+            StartMenuOption result;
             while (true)
             {
                 do
@@ -32,14 +35,14 @@ namespace ElephantBooking
                 } while (!validInput);
                 try
                 {
-                    var enumName = Enum.GetName(typeof(StartMenu), selection);
-                    return result = (StartMenu)Enum.Parse(typeof(StartMenu), enumName);
+                    var enumName = Enum.GetName(typeof(StartMenuOption), selection);
+                    return result = (StartMenuOption)Enum.Parse(typeof(StartMenuOption), enumName);
                 }
                 catch (Exception)
                 {
                     ClearCurrentLine(left, top);
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong, please try again");
+                    Console.WriteLine("Choose a number 1-3, please try again");
                     Console.ForegroundColor = ConsoleColor.White;
 
                     continue;
@@ -47,13 +50,13 @@ namespace ElephantBooking
             }
         }
 
-        public MainMenu CheckEnumMenu(string question)
+        public MainMenuOption CheckEnumMenu(string question)
         {
             (int left, int top) = Console.GetCursorPosition();
 
-            MainMenu selection;
+            MainMenuOption selection;
             bool validInput;
-            MainMenu result;
+            MainMenuOption result;
             while (true)
             {
                 do
@@ -71,14 +74,14 @@ namespace ElephantBooking
                 } while (!validInput);
                 try
                 {
-                    var enumName = Enum.GetName(typeof(MainMenu), selection);
-                    return result = (MainMenu)Enum.Parse(typeof(MainMenu), enumName);
+                    var enumName = Enum.GetName(typeof(MainMenuOption), selection);
+                    return result = (MainMenuOption)Enum.Parse(typeof(MainMenuOption), enumName);
                 }
                 catch (Exception)
                 {
                     ClearCurrentLine(left, top);
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong, please try again");
+                    Console.WriteLine("Choose a number from menu please and try again");
                     Console.ForegroundColor = ConsoleColor.White;
 
                     continue;
@@ -99,7 +102,7 @@ namespace ElephantBooking
                 {
                     ClearCurrentLine(left, top);
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Something went wrong, please try again.");
+                    Console.WriteLine("You have to write a number, please try again.");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             } while (!validInput);
@@ -124,6 +127,38 @@ namespace ElephantBooking
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             } while (notValidInput);
+            return result;
+        }
+
+        public string CheckPhoneNumber(string questionForPhoneNumber)
+        {
+            (int left, int top) = Console.GetCursorPosition();
+            bool validInput = true;
+            string result;
+            do
+            {
+                Console.Write(questionForPhoneNumber);
+                result = Console.ReadLine();
+                var resultCharArray = result.ToCharArray();
+
+                for (int i = 0; i < resultCharArray.Length; i++)
+                {
+                    if (!char.IsDigit(resultCharArray[i]))
+                    {
+                        validInput = false;
+                        break;
+                    }
+                }
+
+                validInput = result.Length == 10 && validInput;
+                if (!validInput)
+                {
+                    ClearCurrentLine(left, top);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You have to write a 10 didget phonenumber, please try again.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            } while (!validInput);
             return result;
         }
 
